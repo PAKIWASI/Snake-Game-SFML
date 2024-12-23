@@ -1,6 +1,5 @@
 #include "functions.h"
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
+
 
 int main()
 {
@@ -17,6 +16,24 @@ int main()
                 Input(window);
                 Logic();
                 Draw(window);
+            }
+
+            // Game over screen logic
+            while (gameOver && window.isOpen()) {
+                sf::Event event;
+                while (window.pollEvent(event)) {
+                    if (event.type == sf::Event::Closed)
+                        window.close();
+                }
+
+                Draw(window); // Show the game over screen
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+                    RestartGame(); // Restart the game
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                    window.close(); // Close the game
+                }
             }
         }
         else if (choice == 1) {
